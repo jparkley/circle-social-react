@@ -17,6 +17,7 @@ import Terms from "./components/Terms"
 import Home from "./components/Home"
 import CreatePost from "./components/CreatePost"
 import ViewSinglePost from "./components/ViewSinglePost"
+import Profile from "./components/Profile"
 
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -73,6 +74,9 @@ function Main() {
           <Switch>
             <Route path="/" exact>
               {state.loggedIn ? <Home /> : <HomeGuest />}
+            </Route>
+            <Route path="/profile/:username">
+              <Profile />
             </Route>
             <Route path="/create-post">
               <CreatePost />
