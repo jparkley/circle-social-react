@@ -16,8 +16,10 @@ import About from "./components/About"
 import Terms from "./components/Terms"
 import Home from "./components/Home"
 import CreatePost from "./components/CreatePost"
+import EditPost from "./components/EditPost"
 import ViewSinglePost from "./components/ViewSinglePost"
 import Profile from "./components/Profile"
+import NotFound from "./components/NotFound"
 
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -81,14 +83,20 @@ function Main() {
             <Route path="/create-post">
               <CreatePost />
             </Route>
-            <Route path="/post/:id">
+            <Route path="/post/:id" exact>
               <ViewSinglePost />
+            </Route>
+            <Route path="/post/:id/edit" exact>
+              <EditPost />
             </Route>
             <Route path="/about-us">
               <About />
             </Route>
             <Route path="/terms">
               <Terms />
+            </Route>
+            <Route>
+              <NotFound />
             </Route>
           </Switch>
           <Footer />
