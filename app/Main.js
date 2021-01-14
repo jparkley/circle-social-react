@@ -1,4 +1,3 @@
-import { func } from "prop-types"
 import React, { useState, useReducer, useEffect } from "react"
 import { useImmerReducer } from "use-immer"
 import ReactDOM from "react-dom"
@@ -22,6 +21,7 @@ import ViewSinglePost from "./components/ViewSinglePost"
 import Profile from "./components/Profile"
 import NotFound from "./components/NotFound"
 import Search from "./components/Search"
+import Chat from "./components/Chat"
 
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -34,7 +34,9 @@ function Main() {
       username: localStorage.getItem("circleAppUsername"),
       avatar: localStorage.getItem("circleAppAvatar")
     },
-    isSearchOpen: false
+    isSearchOpen: false,
+    isChatOpen: false,
+    unreadChatCount: 0
   }
 
   function ourReducer(draft, action) {
@@ -54,6 +56,18 @@ function Main() {
         return
       case "closeSearch":
         draft.isSearchOpen = false
+        return
+      case "toggleChat":
+        draft.isChatOpen = !draft.isChatOpen
+        return
+      case "closeChat":
+        draft.isChatOpen = false
+        return
+      case "increaseUnreadChatCount":
+        draft.unreadChatCount++
+        return
+      case "clearUnreadChatCount":
+        draft.unreadChatCount = 0
         return
     }
   }
@@ -109,6 +123,7 @@ function Main() {
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
             <Search />
           </CSSTransition>
+          <Chat />
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>
