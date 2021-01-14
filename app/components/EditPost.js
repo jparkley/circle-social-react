@@ -5,7 +5,7 @@ import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import Axios from "axios"
 import Page from "./Page"
-import LoadingDotIcon from "./LoadingDotIcon"
+import LoadingDotsIcon from "./LoadingDotsIcon"
 import NotFound from "./NotFound"
 
 function EditPost(props) {
@@ -133,7 +133,7 @@ function EditPost(props) {
   if (state.isFetching)
     return (
       <Page title="...">
-        <LoadingDotIcon />
+        <LoadingDotsIcon />
       </Page>
     )
 
