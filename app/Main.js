@@ -88,6 +88,27 @@ function Main() {
     }
   }, [state.loggedIn]) // 2nd arg: a list or an array you want to watch for changes
 
+  // Check if token has expired or not on first render
+  useEffect(() => {
+    if (state.loggedIn) {
+      const ourRequest = Axios.CancelToken.source()
+      async function fetchToken() {
+        try {
+          const response = await Axios.post("/checkToken", { token: state.user.token })
+          if (!response.data) {
+            // Only when the server returns 'token not valid'
+            dispatch({ type: "logout" })
+            dispatch({ type: "flashMessage", value: "Your session has expired.  Please log in again." })
+          }
+        } catch (e) {
+          console.log("There was a problem. ", e)
+        }
+      }
+      fetchToken()
+      return () => ourRequest.cancel()
+    }
+  }, [])
+
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
