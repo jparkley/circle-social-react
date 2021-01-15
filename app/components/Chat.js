@@ -5,24 +5,25 @@ import { Link } from "react-router-dom"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 
-const socket = io("http://localhost:8080")
-
 function Chat() {
-  const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
   const chatField = useRef(null)
   const chatLog = useRef(null)
+  const socket = useRef(null)
+  const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const [state, setState] = useImmer({
     chatFieldValue: "",
     chatMessages: []
   })
 
   useEffect(() => {
-    socket.on("chatFromServer", message => {
+    socket.current = io("http://localhost:8080")
+    socket.current.on("chatFromServer", message => {
       setState(draft => {
         draft.chatMessages.push(message)
       })
     })
+    return () => socket.current.disconnect()
   }, [])
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function Chat() {
   function handleSubmit(e) {
     e.preventDefault()
     // Send message to chat server
-    socket.emit("chatFromBrowser", { message: state.chatFieldValue, token: appState.user.token })
+    socket.current.emit("chatFromBrowser", { message: state.chatFieldValue, token: appState.user.token })
 
     setState(draft => {
       // Add message to state collection of messages
