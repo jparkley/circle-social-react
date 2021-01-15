@@ -26,7 +26,7 @@ const CreatePost = React.lazy(() => import("./components/CreatePost"))
 const ViewSinglePost = React.lazy(() => import("./components/ViewSinglePost"))
 const Chat = React.lazy(() => import("./components/Chat"))
 
-Axios.defaults.baseURL = process.env.BACKENDURL || ""
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://dobooro-circle-react.herokuapp.com"
 
 function Main() {
   const initalState = {
