@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react"
 import Axios from "axios"
 import DispatchContext from "../DispatchContext"
+import FlashMessages from "./FlashMessages"
 
 function HeaderLoggedOut(props) {
   const appDispatch = useContext(DispatchContext)
@@ -13,11 +14,13 @@ function HeaderLoggedOut(props) {
       const response = await Axios.post("/login", { username, password })
       if (response.data) {
         appDispatch({ type: "login", data: response.data })
+        appDispatch({ type: "flashMessage", value: "You have successfully logged in." })
       } else {
+        appDispatch({ type: "flashMessage", value: "Invalid Username and/or Password" })
         console.log("Incorrect username and / or password")
       }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(error)
     }
   }
 
