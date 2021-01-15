@@ -20,7 +20,7 @@ function CreatePost(props) {
         body,
         token: appState.user.token
       })
-      console.log(response)
+
       // Redirect to the new post URL
       appDispatch({ type: "flashMessage", value: "Congrats, you successfully created a new post!" })
       props.history.push(`/post/${response.data}`)

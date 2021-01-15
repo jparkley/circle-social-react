@@ -4,7 +4,12 @@
   "description": "",
   "main": "test.js",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "npm-run-all -s generate webpackDev",
+    "generate": "babel-node --presets=@babel/preset-react,@babel/preset-env generateHtml.js",
+    "webpackDev": "webpack-dev-server",
+    "build": "npm-run-all -s generate webpackBuild",
+    "webpackBuild": "webpack",
+    "previewDist": "node previewDist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/node": "^7.8.7",
+    "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "axios": "^0.21.1",
